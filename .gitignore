@@ -1,0 +1,40 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+/.awcache
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+dist
+*.ipr
+npm
+node_modules
+*.log
+
+### NetBeans ###
+nbproject/private/
+build/
+target/
+bbuild/
+dist/
+nbdist/
+mvnw.cmd
+mvnw
+.mvn
+.nb-gradle/
+
+/node/
+node_tmp/
+frontend/node_modules/
+npm-debug.log.*
+
+package-lock.json
