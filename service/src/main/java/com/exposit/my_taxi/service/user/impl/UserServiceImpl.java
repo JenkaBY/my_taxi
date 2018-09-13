@@ -1,6 +1,6 @@
 package com.exposit.my_taxi.service.user.impl;
 
-import com.exposit.my_taxi.model.User;
+import com.exposit.my_taxi.model.user.UserEntity;
 import com.exposit.my_taxi.repository.UserRepository;
 import com.exposit.my_taxi.service.user.UserService;
 import com.exposit.my_taxi.service.user.dto.UserDto;
@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDto> findById(Long id) {
-        User foundUser = userRepository.getOne(id);
-        return Optional.ofNullable(Objects.nonNull(foundUser) ? new UserDto(foundUser) : null);
+        UserEntity foundUserEntity = userRepository.getOne(id);
+        return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? new UserDto(foundUserEntity) : null);
     }
 
     @Override
     public Optional<UserDto> findByName(String name) {
-        User foundUser = userRepository.findUserByName(name);
-        return Optional.ofNullable(Objects.nonNull(foundUser) ? new UserDto(foundUser) : null);
+        UserEntity foundUserEntity = userRepository.findUserByName(name);
+        return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? new UserDto(foundUserEntity) : null);
     }
 
     @Override
@@ -45,15 +45,15 @@ public class UserServiceImpl implements UserService {
         if (isUserNameExist(user.getName())) {
             return Optional.empty();
         }
-        User convertedUser = user.convertToUser();
-        UserDto createdUserDto = new UserDto(userRepository.save(convertedUser));
+        UserEntity convertedUserEntity = user.convertToUser();
+        UserDto createdUserDto = new UserDto(userRepository.save(convertedUserEntity));
         return Optional.ofNullable(createdUserDto);
     }
 
     @Override
     public UserDto updateUser(UserDto user) {
-        User updatedUser = userRepository.save(user.convertToUser());
-        return new UserDto(updatedUser);
+        UserEntity updatedUserEntity = userRepository.save(user.convertToUser());
+        return new UserDto(updatedUserEntity);
     }
 
     /**
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean isUserNameExist(String name) {
-        User foundUser = userRepository.findUserByName(name);
-        return Objects.nonNull(foundUser);
+        UserEntity foundUserEntity = userRepository.findUserByName(name);
+        return Objects.nonNull(foundUserEntity);
     }
 }

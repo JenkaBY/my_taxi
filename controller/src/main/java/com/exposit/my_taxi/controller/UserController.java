@@ -52,12 +52,12 @@ public class UserController {
 
     @PostMapping
     @ApiOperation(value = "Creates a new user",
-            notes = "Creates a new User by passed following json \"{\"name\":\"New User name\", \"age\": 21 }\" where 'name' is required parameter.")
+            notes = "Creates a new UserEntity by passed following json \"{\"name\":\"New UserEntity name\", \"age\": 21 }\" where 'name' is required parameter.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "If user was created", response = UserDto.class),
             @ApiResponse(code = 400, message = "If user wasn't created")
     })
-    public ResponseEntity<?> createUser(@ApiParam(value = "Passed name", required = true, example = "{\"name\":\"New User name\", \"age\": 21 }") @RequestBody UserDto user) {
+    public ResponseEntity<?> createUser(@ApiParam(value = "Passed name", required = true, example = "{\"name\":\"New UserEntity name\", \"age\": 21 }") @RequestBody UserDto user) {
         final Optional<UserDto> createdUser = userService.createNewUser(user);
         return getResponseForUser(createdUser);
     }

@@ -1,6 +1,6 @@
 package com.exposit.my_taxi.service.user.dto;
 
-import com.exposit.my_taxi.model.User;
+import com.exposit.my_taxi.model.user.UserEntity;
 
 import java.util.Objects;
 
@@ -22,21 +22,21 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(User user) {
-        this.name = user.getName();
-        this.age = user.getAge();
-        this.id = user.getId();
+    public UserDto(UserEntity userEntity) {
+        this.name = userEntity.getNameOLD();
+        this.age = userEntity.getAgeOLD();
+        this.id = userEntity.getId();
     }
 
-    public User convertToUser() {
+    public UserEntity convertToUser() {
         if (Objects.nonNull(name)) {
-            User user = new User();
-            user.setName(name);
-            user.setAge(age);
+            UserEntity userEntity = new UserEntity();
+            userEntity.setNameOLD(name);
+            userEntity.setAgeOLD(age);
             if (Objects.nonNull(id)) {
-                user.setId(id);
+                userEntity.setId(id);
             }
-            return user;
+            return userEntity;
         }
         throw new RuntimeException("Name can't be blank!");
     }

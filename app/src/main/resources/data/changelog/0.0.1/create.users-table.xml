@@ -9,11 +9,28 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
-            <column name="name" type="varchar(500)">
+            <column name="login" type="varchar(100)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="age" type="int">
-                <constraints nullable="true"/>
+            <column name="hash_password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_created_at" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_updated_at" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_type_id" type="bigint">
+                <constraints foreignKeyName="fk_user_type" referencedTableName="user_types"
+                             referencedColumnNames="id" nullable="false"/>
+            </column>
+            <column name="user_status_id" type="bigint">
+                <constraints foreignKeyName="fk_user_status" referencedTableName="user_statuses"
+                             referencedColumnNames="id" nullable="false"/>
+            </column>
+            <column name="version" type="bigint" defaultValue="0">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
