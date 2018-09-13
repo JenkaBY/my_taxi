@@ -21,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     @ApiOperation(value = "Get all existing users",
             notes = "All users will be here. If no users found, returns empty array")
     @ApiResponses({
