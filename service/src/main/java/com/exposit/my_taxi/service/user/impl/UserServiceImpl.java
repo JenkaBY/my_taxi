@@ -3,7 +3,7 @@ package com.exposit.my_taxi.service.user.impl;
 import com.exposit.my_taxi.model.user.UserEntity;
 import com.exposit.my_taxi.repository.UserRepository;
 import com.exposit.my_taxi.service.user.UserService;
-import com.exposit.my_taxi.service.user.dto.UserDto;
+import com.exposit.my_taxi.service.user.dto.UserDtoOld;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,49 +22,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAll() {
+    public List<UserDtoOld> findAll() {
         return userRepository.findAll().stream()
-                .map(UserDto::new)
+                .map(UserDtoOld::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserDto> findById(Long id) {
+    public Optional<UserDtoOld> findById(Long id) {
         UserEntity foundUserEntity = userRepository.getOne(id);
-        return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? new UserDto(foundUserEntity) : null);
+        return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? new UserDtoOld(foundUserEntity) : null);
     }
 
     @Override
-    public Optional<UserDto> findByName(String name) {
-        UserEntity foundUserEntity = userRepository.findUserByName(name);
-        return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? new UserDto(foundUserEntity) : null);
+    public Optional<UserDtoOld> findByName(String login) {
+        UserEntity foundUserEntity = userRepository.findUserByLogin(login);
+        return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? new UserDtoOld(foundUserEntity) : null);
     }
 
     @Override
-    public Optional<UserDto> createNewUser(UserDto user) {
-        if (isUserNameExist(user.getName())) {
+    public Optional<UserDtoOld> createNewUser(UserDtoOld user) {
+        if (isUserLoginExist(user.getName())) {
             return Optional.empty();
         }
         UserEntity convertedUserEntity = user.convertToUser();
-        UserDto createdUserDto = new UserDto(userRepository.save(convertedUserEntity));
-        return Optional.ofNullable(createdUserDto);
+        UserDtoOld createdUserDtoOld = new UserDtoOld(userRepository.save(convertedUserEntity));
+        return Optional.ofNullable(createdUserDtoOld);
     }
 
     @Override
-    public UserDto updateUser(UserDto user) {
+    public UserDtoOld updateUser(UserDtoOld user) {
         UserEntity updatedUserEntity = userRepository.save(user.convertToUser());
-        return new UserDto(updatedUserEntity);
+        return new UserDtoOld(updatedUserEntity);
     }
 
     /**
      * Check if user exists with passed name
      *
-     * @param name checked name
+     * @param login checked name
      * @return true if user exists, false otherwise
      */
     @Override
-    public boolean isUserNameExist(String name) {
-        UserEntity foundUserEntity = userRepository.findUserByName(name);
+    public boolean isUserLoginExist(String login) {
+        UserEntity foundUserEntity = userRepository.findUserByLogin(login);
         return Objects.nonNull(foundUserEntity);
     }
 }

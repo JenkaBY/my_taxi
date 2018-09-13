@@ -1,21 +1,21 @@
 package com.exposit.my_taxi.service.user;
 
-import com.exposit.my_taxi.service.user.dto.UserDto;
+import com.exposit.my_taxi.service.user.dto.UserDtoOld;
 
 import java.util.List;
 import java.util.Optional;
 
 
 public interface UserService {
-    List<UserDto> findAll();
+    List<UserDtoOld> findAll();
 
-    Optional<UserDto> findById(Long id);
+    Optional<UserDtoOld> findById(Long id);
 
-    Optional<UserDto> findByName(String name);
+    Optional<UserDtoOld> findByName(String name);
 
-    Optional<UserDto> createNewUser(UserDto user);
+    Optional<UserDtoOld> createNewUser(UserDtoOld user);
 
-    UserDto updateUser(UserDto user);
+    UserDtoOld updateUser(UserDtoOld user);
 
-    boolean isUserNameExist(String name);
+    boolean isUserLoginExist(String name);
 }

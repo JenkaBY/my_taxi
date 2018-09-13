@@ -1,0 +1,5 @@
+id,title,lookup_code
+1,Admin,admin
+2,Driver,driver
+3,Operator,operator
+4,Customer,customer

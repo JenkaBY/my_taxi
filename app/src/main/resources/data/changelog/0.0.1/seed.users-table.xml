@@ -1,0 +1,12 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="populate-users-table" author="ykuzmich">
+        <loadData tableName="users" file="data/changelog/0.0.1/seed/users.csv" schemaName="public">
+            <column name="name" type="string"/>
+            <column name="age" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

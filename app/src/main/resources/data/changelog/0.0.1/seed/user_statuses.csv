@@ -1,0 +1,4 @@
+id,title,lookup_code
+1,Confirmed,confirmed
+2,Pending confirmation,pending_confirm
+3,Blocked,blocked

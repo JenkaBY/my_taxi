@@ -53,6 +53,70 @@ public class UserEntity extends AbstractVersionEntity {
     @JoinColumn(name = "user_status_id")
     private UserStatusEntity userStatus;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
+    }
+
+    public Timestamp getPasswordCreatedAt() {
+        return passwordCreatedAt;
+    }
+
+    public void setPasswordCreatedAt(Timestamp passwordCreatedAt) {
+        this.passwordCreatedAt = passwordCreatedAt;
+    }
+
+    public Timestamp getPasswordUpdatedAt() {
+        return passwordUpdatedAt;
+    }
+
+    public void setPasswordUpdatedAt(Timestamp passwordUpdatedAt) {
+        this.passwordUpdatedAt = passwordUpdatedAt;
+    }
+
+    public UserTypeEntity getUserTypeEntity() {
+        return userTypeEntity;
+    }
+
+    public void setUserTypeEntity(UserTypeEntity userTypeEntity) {
+        this.userTypeEntity = userTypeEntity;
+    }
+
+    public UserStatusEntity getUserStatusEntity() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatusEntity userStatus) {
+        this.userStatus = userStatus;
+    }
+
     @Override
     public String toString() {
         return "UserEntity id:" + getId();
