@@ -10,28 +10,6 @@ import java.sql.Timestamp;
 public class UserEntity extends AbstractVersionEntity {
     private static final long serialVersionUID = -1405846521960830912L;
 
-    @Column(nullable = false, length = 500, unique = true)
-    private String name;
-
-    @Column
-    private int age;
-
-    public String getNameOLD() {
-        return name;
-    }
-
-    public void setNameOLD(String name) {
-        this.name = name;
-    }
-
-    public int getAgeOLD() {
-        return age;
-    }
-
-    public void setAgeOLD(int age) {
-        this.age = age;
-    }
-
     @Column(nullable = false, unique = true, length = 100)
     private String login;
 
@@ -44,7 +22,6 @@ public class UserEntity extends AbstractVersionEntity {
     @Column(name = "password_updated_at", nullable = false)
     private Timestamp passwordUpdatedAt;
 
-    //TODO Replace with cascadeType.DETACH
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_type_id")
     private UserTypeEntity userTypeEntity;
@@ -52,22 +29,6 @@ public class UserEntity extends AbstractVersionEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_status_id")
     private UserStatusEntity userStatus;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getLogin() {
         return login;
@@ -113,7 +74,7 @@ public class UserEntity extends AbstractVersionEntity {
         return userStatus;
     }
 
-    public void setUserStatus(UserStatusEntity userStatus) {
+    public void setUserStatusEntity(UserStatusEntity userStatus) {
         this.userStatus = userStatus;
     }
 

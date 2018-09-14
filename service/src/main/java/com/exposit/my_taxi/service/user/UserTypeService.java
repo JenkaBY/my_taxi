@@ -9,4 +9,6 @@ public interface UserTypeService {
     List<UserTypeDto> findAll();
 
     Optional<UserTypeDto> findById(Long id);
+
+    UserTypeDto findByLookupCode(String lookupCode);
 }

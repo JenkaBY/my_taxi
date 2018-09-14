@@ -1,21 +1,23 @@
 package com.exposit.my_taxi.service.user;
 
-import com.exposit.my_taxi.service.user.dto.UserDtoOld;
+import com.exposit.my_taxi.service.exception.ValidationException;
+import com.exposit.my_taxi.service.signup.dto.RegisteredUserDto;
+import com.exposit.my_taxi.service.user.dto.UserDto;
 
 import java.util.List;
 import java.util.Optional;
 
 
 public interface UserService {
-    List<UserDtoOld> findAll();
+    List<UserDto> findAll();
 
-    Optional<UserDtoOld> findById(Long id);
+    Optional<UserDto> findById(Long id);
 
-    Optional<UserDtoOld> findByName(String name);
+    Optional<UserDto> findByLogin(String name);
 
-    Optional<UserDtoOld> createNewUser(UserDtoOld user);
+    UserDto createNewUser(RegisteredUserDto user) throws ValidationException;
 
-    UserDtoOld updateUser(UserDtoOld user);
+//    UserDto updateUser(UserDto user);
 
-    boolean isUserLoginExist(String name);
+    boolean isUserExist(String login);
 }

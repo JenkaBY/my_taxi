@@ -10,4 +10,6 @@ public interface UserStatusService {
     List<UserStatusDto> findAll();
 
     Optional<UserStatusDto> findById(Long id);
+
+    UserStatusDto findByLookupCode(String lookupCode);
 }

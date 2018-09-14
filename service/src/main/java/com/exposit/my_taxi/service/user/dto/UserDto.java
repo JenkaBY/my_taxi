@@ -1,25 +1,33 @@
 package com.exposit.my_taxi.service.user.dto;
 
-import com.exposit.my_taxi.model.user.UserEntity;
 import com.exposit.my_taxi.model.user.UserStatus;
 import com.exposit.my_taxi.model.user.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDto {
+    private Long id;
     private String login;
     private UserType userType;
     private UserStatus userStatus;
+    @JsonIgnore
+    private String hashPassword;
 
     public UserDto() {
     }
 
-    public UserDto(UserEntity userEntity) {
-        this.setLogin(userEntity.getLogin());
-        this.setUserStatus(UserStatus.getFromLookupCode(userEntity.getUserStatusEntity().getLookupCode()));
-        this.setUserType(UserType.getFromLookupCode(userEntity.getUserTypeEntity().getLookupCode()));
+//    public UserDto(UserEntity userEntity) {
+//        this.setId(userEntity.getId());
+//        this.setLogin(userEntity.getLogin());
+//        this.setUserStatus(UserStatus.getFromLookupCode(userEntity.getUserStatusEntity().getLookupCode()));
+//        this.setUserType(UserType.getFromLookupCode(userEntity.getUserTypeEntity().getLookupCode()));
+//    }
+
+    public Long getId() {
+        return id;
     }
 
-    public UserEntity convertToEntity() {
-        return null;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -44,5 +52,13 @@ public class UserDto {
 
     public void setUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
     }
 }

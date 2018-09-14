@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserTypeRepository extends JpaRepository<UserTypeEntity, Long> {
     UserTypeEntity findUserTypeEntityById(Long id);
+
+    UserTypeEntity findUserTypeEntityByLookupCode(String lookupCode);
 }
