@@ -30,6 +30,7 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity createCustomer(@RequestBody SignupDto signupDto) {
+        System.out.println(signupDto);
         return ResponseEntity.ok(personService.createCustomer(signupDto));
     }
 }

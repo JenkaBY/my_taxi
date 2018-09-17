@@ -22,4 +22,12 @@ public class SignupDto {
     public void setRawPassword(String rawPassword) {
         this.rawPassword = rawPassword;
     }
+
+    @Override
+    public String toString() {
+        return "SignupDto{" +
+                "login='" + login + '\'' +
+                ", rawPassword='" + rawPassword + '\'' +
+                '}';
+    }
 }

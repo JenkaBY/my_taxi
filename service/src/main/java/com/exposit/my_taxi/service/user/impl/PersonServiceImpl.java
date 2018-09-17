@@ -9,6 +9,7 @@ import com.exposit.my_taxi.service.user.RoleService;
 import com.exposit.my_taxi.service.user.dto.PersonDto;
 import com.exposit.my_taxi.service.user.dto.SignupDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,11 +21,13 @@ import java.util.stream.Collectors;
 public class PersonServiceImpl implements PersonService {
     private PersonRepository personRepository;
     private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonServiceImpl(PersonRepository personRepository, RoleService roleService) {
+    public PersonServiceImpl(PersonRepository personRepository, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

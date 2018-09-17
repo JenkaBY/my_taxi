@@ -74,6 +74,12 @@
             <version>${liquibase.version}</version>
         </dependency>
         <!-- LIQUIBASE-->
+
+        <!--<dependency>-->
+        <!--<groupId>javax.xml.bind</groupId>-->
+        <!--<artifactId>jaxb-api</artifactId>-->
+        <!--&lt;!&ndash;<version>2.3.0</version>&ndash;&gt;-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
