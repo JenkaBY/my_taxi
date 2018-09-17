@@ -9,16 +9,29 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 
+import javax.sql.DataSource;
+
+import static org.springframework.http.HttpMethod.GET;
+
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+    private DataSource dataSource;
+
+    @Autowired
+    public ResourceServerConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/persons/**").hasRole("USER")
+//                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers(GET, "/resources/admin/**").hasRole("ADMIN")
+                .antMatchers(GET, "/resources/customer_and_operator/**").hasAnyRole("OPERATOR", "CUSTOMER")
+                .antMatchers(GET, "/resources/common/**").permitAll()
+                .antMatchers("/persons/**").permitAll()//.hasRole("ADMIN")
                 .and()
                 .logout().logoutUrl("/logout/").logoutSuccessUrl("/").permitAll()
                 .and()
@@ -26,11 +39,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
 
     @Autowired
-    // prefix in secret means that password is not encoded; see https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#pe-dpe
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER");
+                .jdbcAuthentication()
+                .dataSource(dataSource);
+//                .inMemoryAuthentication()
+// prefix in secret means that password is not encoded; see https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#pe-dpe
+//                .withUser("admin").password("{noop}admin").roles("ADMIN");
     }
 
     // It isn't necessary method.
