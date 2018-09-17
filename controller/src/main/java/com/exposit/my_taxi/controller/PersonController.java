@@ -29,8 +29,15 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity createCustomer(@RequestBody SignupDto signupDto) {
+    public ResponseEntity<?> createCustomer(@RequestBody SignupDto signupDto) {
         System.out.println(signupDto);
         return ResponseEntity.ok(personService.createCustomer(signupDto));
+    }
+
+    @PutMapping
+    @RequestMapping("/{personId}")
+    public ResponseEntity<?> updatePerson(@RequestBody PersonDto person, @PathVariable Long personId) {
+        PersonDto updated = personService.update(person);
+        return ResponseEntity.ok(updated);
     }
 }

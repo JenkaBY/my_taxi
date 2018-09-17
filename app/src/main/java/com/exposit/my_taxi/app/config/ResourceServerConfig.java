@@ -33,6 +33,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .withUser("user").password("{noop}password").roles("USER");
     }
 
+    // It isn't necessary method.
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources

@@ -6,23 +6,22 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;
-    private UserApprovalHandler userApprovalHandler;
+    //    private UserApprovalHandler userApprovalHandler;
     private TokenStore tokenStore;
 
 
     @Autowired
     public AuthorizationServerConfig(AuthenticationManager authenticationManager,
-                                     UserApprovalHandler userApprovalHandler,
+//                                     UserApprovalHandler userApprovalHandler,
                                      TokenStore tokenStore) {
         this.authenticationManager = authenticationManager;
         this.tokenStore = tokenStore;
-        this.userApprovalHandler = userApprovalHandler;
+//        this.userApprovalHandler = userApprovalHandler;
     }
 
     @Override

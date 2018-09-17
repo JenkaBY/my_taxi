@@ -74,7 +74,7 @@ public class PersonServiceImpl implements PersonService {
     private Person create(SignupDto credential, RoleE role) {
         Person person = new Person();
         person.setLogin(credential.getLogin());
-        person.setHashPassword(credential.getRawPassword());
+        person.setHashPassword(passwordEncoder.encode(credential.getRawPassword()));
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.findByTitle(role.name()));
         person.setRoles(roles);
