@@ -6,11 +6,11 @@ import com.exposit.my_taxi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
@@ -28,29 +28,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Person user = personRepository.findByLogin(login);
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-        return new org.springframework.security.core.userdetails.User(
-                user.getLogin(),
-                user.getHashPassword(),
-                enabled,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
-                convertToGrantAuthorities(user.getRoles())
-        );
+        return new User(user.getLogin(), user.getHashPassword(), convertToGrantAuthorities(user.getRoles()));
     }
 
     private Set<GrantedAuthority> convertToGrantAuthorities(Set<Role> roles) {
         return roles.stream()
-                .map(role -> role.getTitle())
+                .map(Role::getTitle)
                 .map(String::toUpperCase)
-                .map(role -> ROLE + role)
+                .map(ROLE::concat)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
     }

@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -17,10 +18,12 @@ import static org.springframework.http.HttpMethod.GET;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private DataSource dataSource;
+    private LogoutSuccessHandler restLogoutSuccessHandler;
 
     @Autowired
-    public ResourceServerConfig(DataSource dataSource) {
+    public ResourceServerConfig(DataSource dataSource, LogoutSuccessHandler restLogoutSuccessHandler) {
         this.dataSource = dataSource;
+        this.restLogoutSuccessHandler = restLogoutSuccessHandler;
     }
 
     @Override
@@ -31,9 +34,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(GET, "/resources/admin/**").hasRole("ADMIN")
                 .antMatchers(GET, "/resources/customer_and_operator/**").hasAnyRole("OPERATOR", "CUSTOMER")
                 .antMatchers(GET, "/resources/common/**").permitAll()
-                .antMatchers("/persons/**").permitAll()//.hasRole("ADMIN")
+                .antMatchers("/persons/**").hasRole("ADMIN")
+//                .antMatchers( "/logout").authenticated()
                 .and()
-                .logout().logoutUrl("/logout/").logoutSuccessUrl("/").permitAll()
+                .logout().logoutUrl("/logout")
+                .logoutSuccessHandler(restLogoutSuccessHandler)
+                .clearAuthentication(true)
+                .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
