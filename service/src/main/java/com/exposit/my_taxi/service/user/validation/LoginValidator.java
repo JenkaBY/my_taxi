@@ -25,8 +25,8 @@ public class LoginValidator {
         }
     }
 
-    public boolean isUserExist(String login) {
-        return Objects.nonNull(userRepository.findByEmail(login));
+    public boolean isUserExist(String email) {
+        return Objects.nonNull(userRepository.findByEmail(email));
     }
 
     public void validateLength(String login) throws ValidationException {
