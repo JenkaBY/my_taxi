@@ -8,6 +8,7 @@ import com.exposit.my_taxi.service.conversion.converter.UserEntityToUserDtoConve
 import com.exposit.my_taxi.service.conversion.converter.UserStatusDtoToEntityConverter;
 import com.exposit.my_taxi.service.conversion.converter.UserTypeDtoToEntityConverter;
 import com.exposit.my_taxi.service.exception.ValidationException;
+import com.exposit.my_taxi.service.security.PasswordEncoder;
 import com.exposit.my_taxi.service.signup.SignupService;
 import com.exposit.my_taxi.service.signup.dto.RegisteredUserDto;
 import com.exposit.my_taxi.service.signup.dto.SignupDto;
@@ -19,7 +20,6 @@ import com.exposit.my_taxi.service.user.dto.UserDto;
 import com.exposit.my_taxi.service.user.dto.UserStatusDto;
 import com.exposit.my_taxi.service.user.dto.UserTypeDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

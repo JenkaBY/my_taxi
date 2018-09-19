@@ -5,12 +5,12 @@ import com.exposit.my_taxi.repository.UserRepository;
 import com.exposit.my_taxi.service.conversion.converter.RegisteredUserDtoToUserEntityConverter;
 import com.exposit.my_taxi.service.conversion.converter.UserEntityToUserDtoConverter;
 import com.exposit.my_taxi.service.exception.ValidationException;
+import com.exposit.my_taxi.service.security.PasswordEncoder;
 import com.exposit.my_taxi.service.signup.dto.RegisteredUserDto;
 import com.exposit.my_taxi.service.user.UserService;
 import com.exposit.my_taxi.service.user.dto.UserDto;
 import com.exposit.my_taxi.service.user.validation.LoginValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;

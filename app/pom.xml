@@ -45,11 +45,11 @@
 
     <dependencies>
         <!-- MODULES -->
-        <dependency>
-            <groupId>com.exposit.my_taxi</groupId>
-            <artifactId>controller</artifactId>
-            <version>0.0.1</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.exposit.my_taxi</groupId>-->
+        <!--<artifactId>controller</artifactId>-->
+        <!--<version>0.0.1</version>-->
+        <!--</dependency>-->
         <!-- MODULES -->
 
         <!-- SPRING -->
