@@ -41,9 +41,13 @@ public class RestLogoutSuccessHandler implements LogoutSuccessHandler {
         response.setContentType("application/json");
         response.getWriter().flush();
 
+        // Extract authentication from request. The solution was taken from  OAuth2Filter
         Authentication auth = tokenExtractor.extract(request);
         if (auth != null && auth.getPrincipal() != null) {
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            // Set auth for SecurityContext because it is empty
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
             revokeToken(auth.getPrincipal());
             auth.setAuthenticated(false);
         }
