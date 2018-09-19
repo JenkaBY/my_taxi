@@ -1,17 +1,20 @@
 package com.exposit.my_taxi.service.user.impl;
 
+import com.exposit.my_taxi.model.profile.ProfileEntity;
 import com.exposit.my_taxi.model.user.UserEntity;
 import com.exposit.my_taxi.repository.UserRepository;
-import com.exposit.my_taxi.service.conversion.converter.RegisteredUserDtoToUserEntityConverter;
+import com.exposit.my_taxi.service.conversion.converter.RegisterUserDtoToUserEntityConverter;
 import com.exposit.my_taxi.service.conversion.converter.UserEntityToUserDtoConverter;
 import com.exposit.my_taxi.service.exception.ValidationException;
 import com.exposit.my_taxi.service.security.PasswordEncoder;
-import com.exposit.my_taxi.service.signup.dto.RegisteredUserDto;
+import com.exposit.my_taxi.service.signup.dto.RegisterUserDto;
+import com.exposit.my_taxi.service.user.ProfileService;
 import com.exposit.my_taxi.service.user.UserService;
 import com.exposit.my_taxi.service.user.dto.UserDto;
 import com.exposit.my_taxi.service.user.validation.LoginValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -23,19 +26,22 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-    private RegisteredUserDtoToUserEntityConverter registeredUserDtoToUserEntityConverter;
+    private ProfileService profileService;
+    private RegisterUserDtoToUserEntityConverter registerUserDtoToUserEntityConverter;
     private UserEntityToUserDtoConverter userToDto;
     private LoginValidator loginValidator;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RegisteredUserDtoToUserEntityConverter registeredUserDtoToUserEntityConverter,
-                           UserEntityToUserDtoConverter userToDto, LoginValidator loginValidator, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RegisterUserDtoToUserEntityConverter registerUserDtoToUserEntityConverter,
+                           UserEntityToUserDtoConverter userToDto, LoginValidator loginValidator, PasswordEncoder passwordEncoder,
+                           ProfileService profileService) {
         this.userRepository = userRepository;
-        this.registeredUserDtoToUserEntityConverter = registeredUserDtoToUserEntityConverter;
+        this.registerUserDtoToUserEntityConverter = registerUserDtoToUserEntityConverter;
         this.userToDto = userToDto;
         this.loginValidator = loginValidator;
         this.passwordEncoder = passwordEncoder;
+        this.profileService = profileService;
     }
 
     @Override
@@ -52,37 +58,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDto> findByLogin(String login) {
-        UserEntity foundUserEntity = userRepository.findByEmail(login);
+    public Optional<UserDto> findByEmail(String email) {
+        UserEntity foundUserEntity = userRepository.findByEmail(email);
         return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? userToDto.convert(foundUserEntity) : null);
     }
 
-
     @Override
-    public UserDto createNewUser(RegisteredUserDto user) throws ValidationException {
-        validateLogin(user.getLogin());
-        UserEntity newUser = registeredUserDtoToUserEntityConverter.convert(user);
+    @Transactional
+    public UserDto createNewUser(RegisterUserDto user) throws ValidationException {
+        validateLogin(user.getEmail());
+        UserEntity newUser = registerUserDtoToUserEntityConverter.convert(user);
         newUser.setHashPassword(passwordEncoder.encode(user.getRawPassword()));
+
         Timestamp time = Timestamp.from(Instant.now());
         newUser.setPasswordCreatedAt(time);
         newUser.setPasswordUpdatedAt(time);
+
+        ProfileEntity profile = profileService.createNew(user.getProfileDto());
+        newUser.setProfile(profile);
+
         newUser = userRepository.saveAndFlush(newUser);
         return userToDto.convert(newUser);
     }
 
     /**
-     * Check if user exists with passed login
+     * Check if user exists with passed email
      *
-     * @param login checked login
+     * @param email checked email
      * @return true if user exists, false otherwise
      */
     @Override
-    public boolean isUserExist(String login) {
-        UserEntity foundUserEntity = userRepository.findByEmail(login);
+    public boolean isUserExist(String email) {
+        UserEntity foundUserEntity = userRepository.findByEmail(email);
         return Objects.nonNull(foundUserEntity);
     }
 
-    private void validateLogin(String login) throws ValidationException {
-        loginValidator.validate(login);
+    private void validateLogin(String email) throws ValidationException {
+        loginValidator.validate(email);
     }
 }

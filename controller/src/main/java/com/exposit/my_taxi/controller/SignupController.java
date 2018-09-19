@@ -1,6 +1,5 @@
 package com.exposit.my_taxi.controller;
 
-import com.exposit.my_taxi.service.exception.ValidationException;
 import com.exposit.my_taxi.service.signup.SignupService;
 import com.exposit.my_taxi.service.signup.dto.SignupDto;
 import com.exposit.my_taxi.service.user.dto.UserDto;
@@ -22,16 +21,20 @@ public class SignupController {
     }
 
     @PostMapping
-    public ResponseEntity<?> signup(@RequestBody SignupDto credential) throws ValidationException {
-        UserDto createdUser = signupService.signUp(credential);
+    public ResponseEntity<?> signup(@RequestBody SignupDto credential) {
+        try {
+            UserDto createdUser = signupService.signUp(credential);
+            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        } catch (Exception ex) {
 
-        return new ResponseEntity(createdUser, HttpStatus.CREATED);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
     public ResponseEntity<?> all(@RequestParam(name = "num") Long id) {
         SignupDto credential = new SignupDto();
-        credential.setLogin("Login" + id);
+        credential.setEmail("Login" + id);
         credential.setRawPassword("sda");
         UserDto createdUser = null;
         try {

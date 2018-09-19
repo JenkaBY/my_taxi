@@ -31,8 +31,25 @@ public class UserEntity extends AbstractVersionEntity {
     @JoinColumn(name = "user_status_id")
     private UserStatusEntity userStatus;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
     private ProfileEntity profile;
+
+    public UserStatusEntity getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatusEntity userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public ProfileEntity getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileEntity profile) {
+        this.profile = profile;
+    }
 
     public String getEmail() {
         return email;

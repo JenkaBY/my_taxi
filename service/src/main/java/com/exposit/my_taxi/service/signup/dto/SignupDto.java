@@ -1,15 +1,19 @@
 package com.exposit.my_taxi.service.signup.dto;
 
 public class SignupDto {
-    private String login;
+    private String email;
     private String rawPassword;
+    private SignupProfileDto profile;
 
-    public String getLogin() {
-        return login;
+    public SignupDto() {
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRawPassword() {
@@ -18,5 +22,13 @@ public class SignupDto {
 
     public void setRawPassword(String rawPassword) {
         this.rawPassword = rawPassword;
+    }
+
+    public SignupProfileDto getProfile() {
+        return profile;
+    }
+
+    public void setProfile(SignupProfileDto profile) {
+        this.profile = profile;
     }
 }

@@ -1,2 +1,2 @@
-id,email,hash_password,user_type_id,user_status_id
+profile_id,email,hash_password,user_type_id,user_status_id
 1,evgen.kuzmich@gmail.com,admin,1,1

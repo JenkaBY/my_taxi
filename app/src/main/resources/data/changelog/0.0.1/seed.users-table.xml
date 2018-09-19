@@ -5,7 +5,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="populate-users-table" author="ykuzmich">
         <loadData tableName="users" file="data/changelog/0.0.1/seed/users.csv" schemaName="public">
-            <column name="id" type="numeric"/>
+            <column name="profile_id" type="numeric"/>
             <column name="email" type="string"/>
             <column name="hash_password" type="string"/>
             <column name="user_type_id" type="numeric"/>

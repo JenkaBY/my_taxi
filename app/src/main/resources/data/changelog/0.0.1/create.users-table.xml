@@ -9,6 +9,12 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
+
+            <column name="profile_id" type="bigint">
+                <constraints foreignKeyName="fk_profile" referencedTableName="profiles"
+                             referencedColumnNames="id" nullable="false"/>
+            </column>
+
             <column name="email" type="varchar(255)">
                 <constraints nullable="false" unique="true"/>
             </column>

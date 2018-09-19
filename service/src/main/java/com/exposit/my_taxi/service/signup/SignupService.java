@@ -7,5 +7,5 @@ import com.exposit.my_taxi.service.user.dto.UserDto;
 public interface SignupService {
     UserDto signUp(SignupDto credential) throws ValidationException;
 
-//    UserDto registerNewUser(SignupDto credential, UserProfileDto profile, UserTypeDto userType);
+//    UserDto registerNewUser(SignupDto credential, ProfileDto profile, UserTypeDto userType);
 }

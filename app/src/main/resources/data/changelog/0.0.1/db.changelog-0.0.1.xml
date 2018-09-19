@@ -10,9 +10,9 @@
     <include file="data/changelog/0.0.1/create.user_statuses-table.xml"/>
     <include file="data/changelog/0.0.1/seed.user_statuses-table.xml"/>
 
-    <include file="data/changelog/0.0.1/create.users-table.xml"/>
-    <include file="data/changelog/0.0.1/seed.users-table.xml"/>
-
     <include file="data/changelog/0.0.1/create.profiles-table.xml"/>
     <include file="data/changelog/0.0.1/seed.profiles-table.xml"/>
+
+    <include file="data/changelog/0.0.1/create.users-table.xml"/>
+    <include file="data/changelog/0.0.1/seed.users-table.xml"/>
 </databaseChangeLog>

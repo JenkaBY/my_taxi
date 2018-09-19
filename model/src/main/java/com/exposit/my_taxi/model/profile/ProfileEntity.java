@@ -18,8 +18,7 @@ public class ProfileEntity extends AbstractVersionEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "profile")
     private UserEntity user;
 
 //    private ImageEntity image;

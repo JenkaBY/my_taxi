@@ -2,14 +2,24 @@ package com.exposit.my_taxi.service.signup.dto;
 
 import com.exposit.my_taxi.model.user.UserStatus;
 import com.exposit.my_taxi.model.user.UserType;
+import com.exposit.my_taxi.service.user.dto.ProfileDto;
 
-public class RegisteredUserDto {
-    private String login;
+public class RegisterUserDto {
+    private String email;
     private String rawPassword;
     private UserType userType;
     private UserStatus userStatus;
+    private ProfileDto profileDto;
 
-    public RegisteredUserDto() {
+    public RegisterUserDto() {
+    }
+
+    public ProfileDto getProfileDto() {
+        return profileDto;
+    }
+
+    public void setProfileDto(ProfileDto profileDto) {
+        this.profileDto = profileDto;
     }
 
     public UserType getUserType() {
@@ -28,12 +38,12 @@ public class RegisteredUserDto {
         this.userStatus = userStatus;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRawPassword() {
