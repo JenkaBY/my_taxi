@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDto> findByLogin(String login) {
-        UserEntity foundUserEntity = userRepository.findUserEntityByLogin(login);
+        UserEntity foundUserEntity = userRepository.findByEmail(login);
         return Optional.ofNullable(Objects.nonNull(foundUserEntity) ? userToDto.convert(foundUserEntity) : null);
     }
 
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean isUserExist(String login) {
-        UserEntity foundUserEntity = userRepository.findUserEntityByLogin(login);
+        UserEntity foundUserEntity = userRepository.findByEmail(login);
         return Objects.nonNull(foundUserEntity);
     }
 

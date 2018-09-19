@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 public class UserEntity extends AbstractVersionEntity {
     private static final long serialVersionUID = -1405846521960830912L;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String login;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(name = "hash_password", nullable = false, length = 60)
     private String hashPassword;
@@ -30,12 +30,12 @@ public class UserEntity extends AbstractVersionEntity {
     @JoinColumn(name = "user_status_id")
     private UserStatusEntity userStatus;
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getHashPassword() {

@@ -77,7 +77,7 @@ public class SignupServiceImpl implements SignupService {
 
     private UserEntity initUserEntity(SignupDto credential, UserTypeDto userType, UserStatusDto userStatus) {
         UserEntity newUser = new UserEntity();
-        newUser.setLogin(credential.getLogin());
+        newUser.setEmail(credential.getLogin());
         newUser.setHashPassword(passwordEncoder.encode(credential.getRawPassword()));
 
         newUser.setUserTypeEntity(userTypeDtoToEntity.convert(userType));

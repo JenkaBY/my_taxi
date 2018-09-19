@@ -21,7 +21,7 @@ public class RegisteredUserDtoToUserEntityConverter implements Converter<Registe
     @Override
     public UserEntity convert(RegisteredUserDto user) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setLogin(user.getLogin());
+        userEntity.setEmail(user.getLogin());
         userEntity.setUserStatusEntity(userStatusToEntityConverter.convert(user.getUserStatus()));
         userEntity.setUserTypeEntity(userTypeToEntityConverter.convert(user.getUserType()));
         return userEntity;

@@ -1,3 +1,2 @@
-name,age
-"Test name",21
-"Test name1",23
+email,hash_password,user_type_id,user_status_id
+evgen.kuzmich@gmail.com,admin,1,1

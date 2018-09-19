@@ -26,7 +26,7 @@ public class LoginValidator {
     }
 
     public boolean isUserExist(String login) {
-        return Objects.nonNull(userRepository.findUserEntityByLogin(login));
+        return Objects.nonNull(userRepository.findByEmail(login));
     }
 
     public void validateLength(String login) throws ValidationException {

@@ -17,7 +17,7 @@ public class UserDto {
 
 //    public UserDto(UserEntity userEntity) {
 //        this.setId(userEntity.getId());
-//        this.setLogin(userEntity.getLogin());
+//        this.setEmail(userEntity.getEmail());
 //        this.setUserStatus(UserStatus.getFromLookupCode(userEntity.getUserStatusEntity().getLookupCode()));
 //        this.setUserType(UserType.getFromLookupCode(userEntity.getUserTypeEntity().getLookupCode()));
 //    }

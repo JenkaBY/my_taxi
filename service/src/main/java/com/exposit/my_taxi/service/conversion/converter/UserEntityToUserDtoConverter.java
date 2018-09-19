@@ -14,7 +14,7 @@ public class UserEntityToUserDtoConverter implements Converter<UserEntity, UserD
     public UserDto convert(UserEntity user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setLogin(user.getLogin());
+        userDto.setLogin(user.getEmail());
         userDto.setUserStatus(UserStatus.getFromLookupCode(user.getUserStatusEntity().getLookupCode()));
         userDto.setUserType(UserType.getFromLookupCode(user.getUserTypeEntity().getLookupCode()));
         return userDto;
