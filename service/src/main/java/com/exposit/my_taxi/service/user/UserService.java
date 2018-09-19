@@ -20,4 +20,8 @@ public interface UserService {
 //    UserDto updateUser(UserDto user);
 
     boolean isUserExist(String login);
+
+    void activateUserByCode(String code);
+
+    void deleteById(Long userId);
 }

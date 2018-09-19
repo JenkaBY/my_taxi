@@ -1,14 +1,19 @@
 package com.exposit.my_taxi.service.user.impl;
 
 import com.exposit.my_taxi.model.profile.ProfileEntity;
+import com.exposit.my_taxi.model.user.UserActivationEntity;
 import com.exposit.my_taxi.model.user.UserEntity;
+import com.exposit.my_taxi.model.user.UserStatus;
+import com.exposit.my_taxi.model.user.UserStatusEntity;
 import com.exposit.my_taxi.repository.UserRepository;
 import com.exposit.my_taxi.service.conversion.converter.RegisterUserDtoToUserEntityConverter;
 import com.exposit.my_taxi.service.conversion.converter.UserEntityToUserDtoConverter;
+import com.exposit.my_taxi.service.conversion.converter.UserStatusToEntityConverter;
 import com.exposit.my_taxi.service.exception.ValidationException;
 import com.exposit.my_taxi.service.security.PasswordEncoder;
 import com.exposit.my_taxi.service.signup.dto.RegisterUserDto;
 import com.exposit.my_taxi.service.user.ProfileService;
+import com.exposit.my_taxi.service.user.UserActivationService;
 import com.exposit.my_taxi.service.user.UserService;
 import com.exposit.my_taxi.service.user.dto.UserDto;
 import com.exposit.my_taxi.service.user.validation.LoginValidator;
@@ -31,17 +36,22 @@ public class UserServiceImpl implements UserService {
     private UserEntityToUserDtoConverter userToDto;
     private LoginValidator loginValidator;
     private PasswordEncoder passwordEncoder;
+    private UserActivationService userActivationService;
+    private UserStatusToEntityConverter userStatusToEntityConverter;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RegisterUserDtoToUserEntityConverter registerUserDtoToUserEntityConverter,
                            UserEntityToUserDtoConverter userToDto, LoginValidator loginValidator, PasswordEncoder passwordEncoder,
-                           ProfileService profileService) {
+                           ProfileService profileService, UserActivationService userActivationService,
+                           UserStatusToEntityConverter userStatusToEntityConverter) {
         this.userRepository = userRepository;
         this.registerUserDtoToUserEntityConverter = registerUserDtoToUserEntityConverter;
         this.userToDto = userToDto;
         this.loginValidator = loginValidator;
         this.passwordEncoder = passwordEncoder;
         this.profileService = profileService;
+        this.userActivationService = userActivationService;
+        this.userStatusToEntityConverter = userStatusToEntityConverter;
     }
 
     @Override
@@ -78,7 +88,29 @@ public class UserServiceImpl implements UserService {
         newUser.setProfile(profile);
 
         newUser = userRepository.saveAndFlush(newUser);
+
+        String activationCode = userActivationService.createNewForUser(newUser);
+        System.out.println(activationCode);
+
         return userToDto.convert(newUser);
+    }
+
+
+    @Override
+    @Transactional
+    public void activateUserByCode(String code) {
+        UserActivationEntity activation = userActivationService.findByCode(code);
+        UserEntity user = activation.getUser();
+        UserStatusEntity statusConfirmed = userStatusToEntityConverter.convert(UserStatus.CONFIRMED);
+        user.setUserStatus(statusConfirmed);
+        userRepository.saveAndFlush(user);
+
+        userActivationService.delete(activation);
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        userRepository.deleteById(userId);
     }
 
     /**

@@ -23,17 +23,28 @@ public class UserEntity extends AbstractVersionEntity {
     @Column(name = "password_updated_at", nullable = false)
     private Timestamp passwordUpdatedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_type_id")
     private UserTypeEntity userTypeEntity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_status_id")
     private UserStatusEntity userStatus;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "profile_id", updatable = false, unique = true)
     private ProfileEntity profile;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    private UserActivationEntity activationEntity;
+
+    public UserActivationEntity getActivationEntity() {
+        return activationEntity;
+    }
+
+    public void setActivationEntity(UserActivationEntity activationEntity) {
+        this.activationEntity = activationEntity;
+    }
 
     public UserStatusEntity getUserStatus() {
         return userStatus;
