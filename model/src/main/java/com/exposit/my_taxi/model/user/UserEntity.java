@@ -1,5 +1,6 @@
 package com.exposit.my_taxi.model.user;
 
+import com.exposit.my_taxi.model.profile.ProfileEntity;
 import com.exposit.my_taxi.model.shared.AbstractVersionEntity;
 
 import javax.persistence.*;
@@ -29,6 +30,9 @@ public class UserEntity extends AbstractVersionEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_status_id")
     private UserStatusEntity userStatus;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private ProfileEntity profile;
 
     public String getEmail() {
         return email;
