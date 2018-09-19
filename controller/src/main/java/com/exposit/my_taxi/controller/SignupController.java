@@ -21,7 +21,7 @@ public class SignupController {
         this.signupService = signupService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> signup(@RequestBody SignupDto credential) throws ValidationException {
         UserDto createdUser = signupService.signUp(credential);
 

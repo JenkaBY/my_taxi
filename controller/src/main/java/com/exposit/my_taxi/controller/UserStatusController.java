@@ -28,7 +28,7 @@ public class UserStatusController {
         this.userStatusService = userStatusService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation(value = "Get all user statuses",
             notes = "Return all available users statuses. If no user statuses found, returns empty array")
     @ApiResponses({
