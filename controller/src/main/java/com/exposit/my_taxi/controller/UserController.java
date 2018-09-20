@@ -46,8 +46,9 @@ public class UserController {
         try {
             userService.activateUserByCode(code);
             resultDto = new ResultDto(true);
-        } catch (Exception ep) {
+        } catch (Exception exp) {
             resultDto = new ResultDto(false);
+            resultDto.setMessage(exp.getMessage());
         }
         return ResponseEntity.ok(resultDto);
     }
