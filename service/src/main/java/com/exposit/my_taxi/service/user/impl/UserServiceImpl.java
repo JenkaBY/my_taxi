@@ -9,6 +9,7 @@ import com.exposit.my_taxi.repository.UserRepository;
 import com.exposit.my_taxi.service.conversion.converter.RegisterUserDtoToUserEntityConverter;
 import com.exposit.my_taxi.service.conversion.converter.UserEntityToUserDtoConverter;
 import com.exposit.my_taxi.service.conversion.converter.UserStatusToEntityConverter;
+import com.exposit.my_taxi.service.exception.IncorrectActivationCodeException;
 import com.exposit.my_taxi.service.exception.ValidationException;
 import com.exposit.my_taxi.service.security.PasswordEncoder;
 import com.exposit.my_taxi.service.signup.dto.RegisterUserDto;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
     private UserActivationService userActivationService;
     private UserStatusToEntityConverter userStatusToEntityConverter;
 
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RegisterUserDtoToUserEntityConverter registerUserDtoToUserEntityConverter,
                            UserEntityToUserDtoConverter userToDto, LoginValidator loginValidator, PasswordEncoder passwordEncoder,
@@ -52,6 +54,7 @@ public class UserServiceImpl implements UserService {
         this.profileService = profileService;
         this.userActivationService = userActivationService;
         this.userStatusToEntityConverter = userStatusToEntityConverter;
+
     }
 
     @Override
@@ -89,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
         newUser = userRepository.saveAndFlush(newUser);
 
-        String activationCode = userActivationService.createNewForUser(newUser);
+        String activationCode = userActivationService.createAndGetForUser(newUser);
         System.out.println(activationCode);
 
         return userToDto.convert(newUser);
@@ -98,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void activateUserByCode(String code) {
+    public void activateUserByCode(String code) throws IncorrectActivationCodeException {
         UserActivationEntity activation = userActivationService.findByCode(code);
         UserEntity user = activation.getUser();
         UserStatusEntity statusConfirmed = userStatusToEntityConverter.convert(UserStatus.CONFIRMED);

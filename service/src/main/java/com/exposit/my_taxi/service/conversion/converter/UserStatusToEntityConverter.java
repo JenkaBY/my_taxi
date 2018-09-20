@@ -18,7 +18,7 @@ public class UserStatusToEntityConverter implements Converter<UserStatus, UserSt
 
     @Override
     public UserStatusEntity convert(UserStatus userStatus) {
-        UserStatusEntity entity = userStatusRepository.findUserStatusEntityByLookupCode(userStatus.getLookupCode());
+        UserStatusEntity entity = userStatusRepository.findByLookupCode(userStatus.getLookupCode());
         return entity;
     }
 }

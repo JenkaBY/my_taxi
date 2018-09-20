@@ -39,8 +39,8 @@ public class UserStatusServiceImpl implements UserStatusService {
     }
 
     @Override
-    @Cacheable("user_statuses")
+    @Cacheable(value = "user_statuses")
     public UserStatusDto findByLookupCode(String lookupCode) {
-        return userStatusEntityToDtoConverter.convert(userStatusRepository.findUserStatusEntityByLookupCode(lookupCode));
+        return userStatusEntityToDtoConverter.convert(userStatusRepository.findByLookupCode(lookupCode));
     }
 }

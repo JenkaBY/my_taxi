@@ -3,7 +3,9 @@ package com.exposit.my_taxi.service.user.impl;
 import com.exposit.my_taxi.model.user.UserActivationEntity;
 import com.exposit.my_taxi.model.user.UserEntity;
 import com.exposit.my_taxi.repository.UserActivationRepository;
+import com.exposit.my_taxi.service.exception.IncorrectActivationCodeException;
 import com.exposit.my_taxi.service.user.UserActivationService;
+import com.exposit.my_taxi.service.user.validation.ActivationCodeValidator;
 import com.exposit.my_taxi.service.utils.ActivationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserActivationServiceImpl implements UserActivationService {
     private UserActivationRepository activationCodeRepository;
     private ActivationCodeGenerator activationCodeGenerator;
+    private ActivationCodeValidator activationCodeValidator;
 
     @Autowired
-    public UserActivationServiceImpl(UserActivationRepository activationCodeRepository, ActivationCodeGenerator activationCodeGenerator) {
+    public UserActivationServiceImpl(UserActivationRepository activationCodeRepository,
+                                     ActivationCodeGenerator activationCodeGenerator,
+                                     ActivationCodeValidator activationCodeValidator) {
         this.activationCodeRepository = activationCodeRepository;
         this.activationCodeGenerator = activationCodeGenerator;
+        this.activationCodeValidator = activationCodeValidator;
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public String createNewForUser(UserEntity user) {
+    public String createAndGetForUser(UserEntity user) {
         UserActivationEntity activation = new UserActivationEntity();
         activation.setActivationCode(activationCodeGenerator.generate());
         activation.setUser(user);
@@ -32,7 +38,8 @@ public class UserActivationServiceImpl implements UserActivationService {
     }
 
     @Override
-    public UserActivationEntity findByCode(String code) {
+    public UserActivationEntity findByCode(String code) throws IncorrectActivationCodeException {
+        activationCodeValidator.validate(code);
         return activationCodeRepository.findByActivationCode(code);
     }
 

@@ -5,7 +5,6 @@ import com.exposit.my_taxi.service.conversion.converter.UserTypeEntityToDtoConve
 import com.exposit.my_taxi.service.user.UserTypeService;
 import com.exposit.my_taxi.service.user.dto.UserTypeDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,14 +31,14 @@ public class UserTypeServiceImpl implements UserTypeService {
     }
 
     @Override
+//    TODO Remove this method
     public Optional<UserTypeDto> findById(Long id) {
         return Optional.ofNullable(userTypeRepository.findUserTypeEntityById(id))
                 .map(UserTypeDto::new);
     }
 
     @Override
-    @Cacheable("user_types")
     public UserTypeDto findByLookupCode(String lookupCode) {
-        return userTypeEntityToDtoConverter.convert(userTypeRepository.findUserTypeEntityByLookupCode(lookupCode));
+        return userTypeEntityToDtoConverter.convert(userTypeRepository.findByLookupCode(lookupCode));
     }
 }

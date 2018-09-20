@@ -18,7 +18,7 @@ public class UserTypeToEntityConverter implements Converter<UserType, UserTypeEn
 
     @Override
     public UserTypeEntity convert(UserType userType) {
-        UserTypeEntity entity = userTypeRepository.findUserTypeEntityByLookupCode(userType.getLookupCode());
+        UserTypeEntity entity = userTypeRepository.findByLookupCode(userType.getLookupCode());
         return entity;
     }
 }
