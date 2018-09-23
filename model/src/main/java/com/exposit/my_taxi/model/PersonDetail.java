@@ -33,6 +33,6 @@ public class PersonDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "User id:" + getId();
+        return "Person id:" + getId();
     }
 }
