@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "people")
+@Table(name = "users")
 @JsonIgnoreProperties(value = {"new"})
-public class Person implements Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = -140584652196083091L;
 
     @Id
@@ -25,13 +25,13 @@ public class Person implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "people_roles",
-            joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
-    private PersonDetail detail;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private UserDetail detail;
 
     public Long getId() {
         return id;
@@ -65,16 +65,16 @@ public class Person implements Serializable {
         this.roles = roles;
     }
 
-    public PersonDetail getDetail() {
+    public UserDetail getDetail() {
         return detail;
     }
 
-    public void setDetail(PersonDetail detail) {
+    public void setDetail(UserDetail detail) {
         this.detail = detail;
     }
 
     @Override
     public String toString() {
-        return "Person id:" + getId();
+        return "User id:" + getId();
     }
 }

@@ -1,22 +1,22 @@
 package com.exposit.my_taxi.service.user;
 
-import com.exposit.my_taxi.service.user.dto.PersonDto;
 import com.exposit.my_taxi.service.user.dto.SignupDto;
+import com.exposit.my_taxi.service.user.dto.UserDto;
 
 import java.util.List;
 
 
 public interface PersonService {
 
-    PersonDto findById(Long id);
+    UserDto findById(Long id);
 
     void deleteById(Long id);
 
-    PersonDto update(PersonDto personDto);
+    UserDto update(UserDto userDto);
 
-    List<PersonDto> findAll();
+    List<UserDto> findAll();
 
-    PersonDto createCustomer(SignupDto credential);
+    UserDto createCustomer(SignupDto credential);
 
-    PersonDto createAdmin(SignupDto credential);
+    UserDto createAdmin(SignupDto credential);
 }

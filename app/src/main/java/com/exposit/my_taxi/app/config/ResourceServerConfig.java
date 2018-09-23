@@ -34,7 +34,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(GET, "/resources/admin/**").hasRole("ADMIN")
                 .antMatchers(GET, "/resources/customer_and_operator/**").hasAnyRole("OPERATOR", "CUSTOMER")
                 .antMatchers(GET, "/resources/common/**").permitAll()
-                .antMatchers("/persons/**").hasRole("ADMIN")
+                .antMatchers("/users/**").permitAll()
 //                .antMatchers( "/logout").authenticated()
                 .and()
                 .logout().logoutUrl("/logout")

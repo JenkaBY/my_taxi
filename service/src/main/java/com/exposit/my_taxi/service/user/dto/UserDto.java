@@ -1,37 +1,37 @@
 package com.exposit.my_taxi.service.user.dto;
 
-import com.exposit.my_taxi.model.Person;
 import com.exposit.my_taxi.model.Role;
 import com.exposit.my_taxi.model.RoleE;
+import com.exposit.my_taxi.model.User;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class PersonDto {
+public class UserDto {
     private Long id;
     private String login;
     private Set<RoleE> roles;
 
-    public PersonDto() {
+    public UserDto() {
     }
 
-    public PersonDto(Long id, String login, Set<String> roleTitle) {
+    public UserDto(Long id, String login, Set<String> roleTitle) {
         this.id = id;
         this.login = login;
         setRolesFromTitles(roleTitle);
     }
 
-    public static PersonDto create(Long id, String login, Set<String> roleTitle) {
-        return new PersonDto(id, login, roleTitle);
+    public static UserDto create(Long id, String login, Set<String> roleTitle) {
+        return new UserDto(id, login, roleTitle);
     }
 
-    public static PersonDto create(Person person) {
-        if (person == null) {
+    public static UserDto create(User user) {
+        if (user == null) {
             return null;
         }
-        return PersonDto.create(person.getId(),
-                person.getLogin(),
-                person.getRoles().stream()
+        return UserDto.create(user.getId(),
+                user.getLogin(),
+                user.getRoles().stream()
                         .map(Role::getTitle)
 //                        .map(String::toUpperCase)
 //                        .map(RoleE::valueOf)

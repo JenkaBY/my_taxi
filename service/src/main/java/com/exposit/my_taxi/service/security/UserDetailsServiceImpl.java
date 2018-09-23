@@ -1,12 +1,11 @@
 package com.exposit.my_taxi.service.security;
 
-import com.exposit.my_taxi.model.Person;
 import com.exposit.my_taxi.model.Role;
-import com.exposit.my_taxi.repository.PersonRepository;
+import com.exposit.my_taxi.model.User;
+import com.exposit.my_taxi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,18 +19,18 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final String ROLE = "ROLE_";
 
-    private PersonRepository personRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Person user = personRepository.findByLogin(login);
-        return new User(user.getLogin(), user.getHashPassword(), convertToGrantAuthorities(user.getRoles()));
+        User user = userRepository.findByLogin(login);
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getHashPassword(), convertToGrantAuthorities(user.getRoles()));
     }
 
     private Set<GrantedAuthority> convertToGrantAuthorities(Set<Role> roles) {

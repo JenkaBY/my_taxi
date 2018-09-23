@@ -1,13 +1,13 @@
 package com.exposit.my_taxi.service.user.impl;
 
-import com.exposit.my_taxi.model.Person;
 import com.exposit.my_taxi.model.Role;
 import com.exposit.my_taxi.model.RoleE;
-import com.exposit.my_taxi.repository.PersonRepository;
+import com.exposit.my_taxi.model.User;
+import com.exposit.my_taxi.repository.UserRepository;
 import com.exposit.my_taxi.service.user.PersonService;
 import com.exposit.my_taxi.service.user.RoleService;
-import com.exposit.my_taxi.service.user.dto.PersonDto;
 import com.exposit.my_taxi.service.user.dto.SignupDto;
+import com.exposit.my_taxi.service.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,69 +19,69 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonServiceImpl implements PersonService {
-    private PersonRepository personRepository;
+    private UserRepository userRepository;
     private RoleService roleService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonServiceImpl(PersonRepository personRepository, RoleService roleService, PasswordEncoder passwordEncoder) {
-        this.personRepository = personRepository;
+    public PersonServiceImpl(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public PersonDto findById(Long id) {
-        return PersonDto.create(personRepository.findById(id).orElse(null));
+    public UserDto findById(Long id) {
+        return UserDto.create(userRepository.findById(id).orElse(null));
     }
 
     @Override
     public void deleteById(Long id) {
-        personRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     @Override
-    public PersonDto update(PersonDto personDto) {
-        Person person = find(personDto.getId());
-        person.setLogin(personDto.getLogin());
-        Set<Role> roles = personDto.getRoles().stream()
+    public UserDto update(UserDto userDto) {
+        User user = find(userDto.getId());
+        user.setLogin(userDto.getLogin());
+        Set<Role> roles = userDto.getRoles().stream()
                 .map(RoleE::name)
                 .map(name -> roleService.findByTitle(name))
                 .collect(Collectors.toSet());
-        person.setRoles(roles);
-        return PersonDto.create(personRepository.save(person));
+        user.setRoles(roles);
+        return UserDto.create(userRepository.save(user));
     }
 
     @Override
-    public List<PersonDto> findAll() {
-        return personRepository.findAll().stream()
-                .map(PersonDto::create)
+    public List<UserDto> findAll() {
+        return userRepository.findAll().stream()
+                .map(UserDto::create)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public PersonDto createCustomer(SignupDto credential) {
-        Person person = create(credential, RoleE.CUSTOMER);
-        return PersonDto.create(personRepository.save(person));
+    public UserDto createCustomer(SignupDto credential) {
+        User user = create(credential, RoleE.CUSTOMER);
+        return UserDto.create(userRepository.save(user));
     }
 
     @Override
-    public PersonDto createAdmin(SignupDto credential) {
-        Person person = create(credential, RoleE.ADMIN);
-        return PersonDto.create(personRepository.save(person));
+    public UserDto createAdmin(SignupDto credential) {
+        User user = create(credential, RoleE.ADMIN);
+        return UserDto.create(userRepository.save(user));
     }
 
-    private Person create(SignupDto credential, RoleE role) {
-        Person person = new Person();
-        person.setLogin(credential.getLogin());
-        person.setHashPassword(passwordEncoder.encode(credential.getRawPassword()));
+    private User create(SignupDto credential, RoleE role) {
+        User user = new User();
+        user.setLogin(credential.getLogin());
+        user.setHashPassword(passwordEncoder.encode(credential.getRawPassword()));
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.findByTitle(role.name()));
-        person.setRoles(roles);
-        return person;
+        user.setRoles(roles);
+        return user;
     }
 
-    private Person find(Long id) {
-        return personRepository.findById(id).orElse(null);
+    private User find(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 }

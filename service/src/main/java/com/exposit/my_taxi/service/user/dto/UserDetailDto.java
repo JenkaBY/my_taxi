@@ -1,13 +1,13 @@
 package com.exposit.my_taxi.service.user.dto;
 
-public class PersonDetailDto {
+public class UserDetailDto {
     private Long id;
     private String name;
 
-    public PersonDetailDto() {
+    public UserDetailDto() {
     }
 
-    public PersonDetailDto(Long id, String name) {
+    public UserDetailDto(Long id, String name) {
         this.id = id;
         this.name = name;
     }

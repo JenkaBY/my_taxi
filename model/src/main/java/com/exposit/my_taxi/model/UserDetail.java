@@ -6,9 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "person_details")
+@Table(name = "user_details")
 @JsonIgnoreProperties(value = {"new"})
-public class PersonDetail implements Serializable {
+public class UserDetail implements Serializable {
     private static final long serialVersionUID = -140584652196083091L;
 
     @Id
@@ -20,8 +20,8 @@ public class PersonDetail implements Serializable {
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "person_id", nullable = false)
-    private Person person;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -33,6 +33,6 @@ public class PersonDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "Person id:" + getId();
+        return "UserDetail id:" + getId();
     }
 }
