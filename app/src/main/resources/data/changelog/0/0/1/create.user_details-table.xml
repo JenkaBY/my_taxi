@@ -4,16 +4,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="create-table-people" author="ykuzmich">
-        <createTable tableName="people" schemaName="public">
+    <changeSet id="create-table-user_details" author="ykuzmich">
+        <createTable tableName="user_details" schemaName="public">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
-            <column name="login" type="varchar(500)">
+            <column name="name" type="varchar(500)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="hash_password" type="varchar(100)">
-                <constraints nullable="false"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user" referencedTableName="users"
+                             referencedColumnNames="id" nullable="false"/>
             </column>
         </createTable>
     </changeSet>

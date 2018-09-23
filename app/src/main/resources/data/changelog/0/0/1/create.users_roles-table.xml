@@ -4,9 +4,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="create-table-people_roles" author="ykuzmich">
-        <createTable tableName="people_roles" schemaName="public">
-            <column name="person_id" type="bigint">
+    <changeSet id="create-table-users_roles" author="ykuzmich">
+        <createTable tableName="users_roles" schemaName="public">
+            <column name="user_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="role_id" type="bigint">
